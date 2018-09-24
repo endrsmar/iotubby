@@ -1,0 +1,8 @@
+parameters:
+
+database:
+	dsn: 'mysql:host=database;dbname=iotubby'
+	user: root
+	password: root
+	options:
+		lazy: yes

@@ -1,0 +1,67 @@
+extensions:
+    console: Kdyby\Console\DI\ConsoleExtension
+
+console:
+    url: http://localhost
+
+
+parameters:
+
+
+application:
+    errorPresenter: Error
+    catchExceptions: true
+    scanDirs: false
+    mapping:
+        *: Iotubby\*Module\Presenters\*Presenter
+
+
+session:
+    expiration: 14 days
+
+
+services:
+    # UI
+    - Iotubby\Forms\FormFactory
+    - Iotubby\Forms\SignInFormFactory
+    - Iotubby\Components\UserPanel\UserPanelFactory
+    - Iotubby\Forms\DeviceFormFactory
+    - Iotubby\Filters\DeviceStatusFilter
+    - Iotubby\Filters\DeviceAddressFilter
+
+    # Persistence
+    -
+        class: Iotubby\Model\UserRepository
+        factory: Iotubby\Model\MysqlUserRepository
+    -
+        class: Iotubby\Model\DeviceRepository
+        factory: Iotubby\Model\MysqlDeviceRepository
+    -
+        class: Iotubby\Model\MeasurementRepository
+        factory: Iotubby\Model\MysqlMeasurementRepository
+    -
+        class: Iotubby\Model\SessionRepository
+        factory: Iotubby\Model\MysqlSessionRepository
+
+    # Services
+    - Iotubby\Services\UserAuthenticator
+    -
+        class: Iotubby\Services\DeviceManager
+        factory: Iotubby\Services\RESTDeviceManager
+
+    # CLI
+    -
+        class: Iotubby\Commands\UpdateDevicesCommand
+        tags: [kdyby.console.command]
+    -
+        class: Iotubby\Commands\CreateUserCommand
+        tags: [kdyby.console.command]
+    -
+        class: Iotubby\Commands\DeleteUserCommand
+        tags: [kdyby.console.command]
+
+    router: Iotubby\Router\RouterFactory::createRouter
+    nette.latteFactory:
+        setup:
+            - addFilter('devicestatus', '@Iotubby\Filters\DeviceStatusFilter')
+            - addFilter('address', '@Iotubby\Filters\DeviceAddressFilter')

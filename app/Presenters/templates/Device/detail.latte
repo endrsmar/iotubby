@@ -1,0 +1,66 @@
+{block content-header}
+    <h1>
+        {$device->getName()}
+    </h1>
+    <ol class="breadcrumb">
+        <li><a n:href="default"><i class="fa fa-dashboard"></i> Devices</a></li>
+        <li><a href="#">{$device->getName()}</a></li>
+    </ol>
+{/block}
+
+{block content-body}
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#stats">Dashboard</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#edit">Edit</a>
+            </li>
+            <li class="btn-warning">
+                <a n:href="delete $device->getId()">Delete</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="stats">
+                <div n:snippet="dashboard">
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-12">
+                            <b>Total power consumed: </b>
+                        </div>
+                        <div class="col-lg-9 col-xs-12">
+                            <span class="total-consumed" data-device-id="{$device->getId()}">{$device->getConsumedTotal()}</span> kWh
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-12" style="line-height: 34px">
+                            <b>Device status:</b>
+                        </div>
+                        <div class="col-lg-9 col-xs-12" style="line-height: 34px">
+                            {$device->getStatus()|devicestatus}
+                            {if !$device->isOffline()}
+                                <a n:href="toggle! $device->getId()" class="ajax btn pull-right {if $device->isOn()}btn-danger{else}btn-success{/if}">
+                                    {if $device->isOn()}
+                                        Turn off
+                                    {else}
+                                        Turn on
+                                    {/if}
+                                </a>
+                            {/if}
+                        </div>
+                    </div>
+                    {if $device->isOn()}
+                        <div class="recent-current-chart" data-device-id="{$device->getId()}" style="width:100%;height:100px;"></div>
+                    {/if}
+                </div>
+            </div>
+            <div class="tab-pane" id="edit">
+                {control deviceForm}
+            </div>
+        </div>
+    </div>
+{/block}
+
+{block scripts}
+
+{/block}

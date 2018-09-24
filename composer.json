@@ -1,0 +1,49 @@
+{
+	"name": "iotubby/backend",
+	"description": "Backend part of the IoTubby project.",
+	"type": "project",
+	"license": ["Apache-2.0"],
+	"authors": [
+		{
+			"name": "Martin Endršt",
+			"email": "endrsmar@fit.cvut.cz"
+		}
+	],
+	"require": {
+		"php": ">=7.0.0",
+		"nette/application": "^2.4.4",
+		"nette/bootstrap": "^2.4.3",
+		"nette/caching": "^2.5",
+		"nette/database": "^2.4",
+		"nette/di": "^2.4",
+		"nette/finder": "^2.4",
+		"nette/forms": "^2.4",
+		"nette/http": "^2.4",
+		"nette/mail": "^2.4",
+		"nette/robot-loader": "^2.4 || ^3.0",
+		"nette/safe-stream": "^2.3",
+		"nette/security": "^2.4",
+		"nette/utils": "^2.4",
+		"latte/latte": "^2.4",
+		"tracy/tracy": "^2.4",
+		"dg/adminer-custom": "^1.9",
+		"myclabs/php-enum": "^1.5",
+		"tomaj/nette-bootstrap-form": "^1.3",
+		"kdyby/console": "^2.7",
+		"guzzlehttp/guzzle": "^6.3"
+	},
+	"require-dev": {
+		"nette/tester": "^2.0"
+	},
+	"minimum-stability": "dev",
+	"config": {
+		"platform": {
+			"php": "7.1"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"Iotubby\\": "app"
+		}
+	}
+}

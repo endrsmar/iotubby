@@ -1,0 +1,9 @@
+log/*
+temp/*
+.idea
+!.gitignore
+vendor/*
+app/config/config.local.neon
+supervisord*
+/nbproject/private/
+www/bower_components/*

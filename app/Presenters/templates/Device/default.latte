@@ -1,0 +1,41 @@
+{block content-header}
+	<h1>
+		Devices
+		<small><a n:href="create">Add device</a></small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Devices</a></li>
+	</ol>
+{/block}
+
+{block content-body}
+	<div class="row" n:snippet="devices">
+		{foreach $devices as $device}
+		<div class="col-lg-3 col-xs-6">
+			<div class="small-box {if $device->isOffline()}bg-red{elseif $device->isOff()}bg-yellow{else}bg-green{/if}">
+				<div class="inner">
+					<h3>{$device->getName()}<small>{$device->getStatus()|devicestatus}</small></h3>
+					<span>{$device|address}</span><br />
+                    Total power consumed: <span class="total-consumed" data-device-id="{$device->getId()}">{$device->getConsumedTotal()}</span>
+					{if !$device->isOffline()}
+						<a n:href="toggle! $device->getId()" class="ajax btn btn-block {if $device->isOn()}btn-danger{else}btn-success{/if}">
+							{if $device->isOn()}
+								Turn off
+							{else}
+								Turn on
+							{/if}
+						</a>
+						{if $device->isOn()}
+							<div class="recent-current-chart" data-device-id="{$device->getId()}" style="width:100%;height:100px;"></div>
+						{/if}
+					{/if}
+				</div>
+				<a n:href="detail $device->getId()" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			</div>
+		</div>
+		{/foreach}
+	</div>
+{/block}
+
+{block scripts}
+{/block}
